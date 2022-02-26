@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "24352133423",
+    "project_id": "reciboi",
+    "storage_bucket": "reciboi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24352133423:android:f88b5fb2c14f5bdebed1da",
+        "android_client_info": {
+          "package_name": "com.miniweebs.reciboi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24352133423-6u52n84jmlmb9bre46jdtu43pmi7sqbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miniweebs.reciboi",
+            "certificate_hash": "a7907bdc62014e3c2f34014cb0d78f7c05080108"
+          }
+        },
+        {
+          "client_id": "24352133423-06auqro4egkqjb04hopooah4a6jdhc5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4UKkLli-ZN71koFRh8-YRurTzalBEvg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24352133423-06auqro4egkqjb04hopooah4a6jdhc5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
