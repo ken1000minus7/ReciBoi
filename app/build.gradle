@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.miniweebs.reciboi"
-        minSdk 27
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -85,4 +85,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
+
 }
