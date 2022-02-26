@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/randomMealFragment"
+        android:title="Random Meal"
+        android:icon="@drawable/ic_meal"/>
+
+    <item android:id="@+id/searchFragment"
+        android:title="Search Meal"
+        android:icon="@drawable/ic_search" />
+    <item  android:id="@+id/userPrefFragment"
+        android:title="User Preferences"
+        android:icon="@drawable/ic_user"/>
+</menu>
