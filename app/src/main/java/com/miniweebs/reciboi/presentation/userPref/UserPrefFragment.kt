@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -32,6 +33,7 @@ class UserPrefFragment : Fragment() {
     private lateinit var mealAdapter : UserMealAdapter
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var noDishes : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class UserPrefFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user_pref, container, false)
         recyclerView = view.findViewById<RecyclerView>(R.id.meal_list)
+        noDishes = view.findViewById<TextView>(R.id.saved_dishes)
         databaseReference = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         return view
@@ -60,6 +63,7 @@ class UserPrefFragment : Fragment() {
                 val user = p0.getValue<User>()
                 var mealList=user?.mealsList
                 if(mealList==null) mealList = mutableListOf()
+                if(mealList.size>0) noDishes.visibility = View.GONE
                 Log.d("checky",mealList.toString())
                 if(context!=null)
                 {
