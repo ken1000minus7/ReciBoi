@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.miniweebs.reciboi.data.api.ApiInstance
 import com.miniweebs.reciboi.data.api.Meal
 import com.miniweebs.reciboi.data.api.MealByCategory
 import com.miniweebs.reciboi.databinding.ActivityMealExtendedBinding
@@ -13,6 +14,7 @@ import com.miniweebs.reciboi.presentation.adapters.CategoryAdapter
 import com.miniweebs.reciboi.presentation.adapters.ListenersCategory
 import com.miniweebs.reciboi.presentation.mealActivity.MealActivity
 import com.miniweebs.reciboi.presentation.viewmodel.MealViewModel
+import kotlinx.coroutines.runBlocking
 
 class MealExtendedActivity : AppCompatActivity() , ListenersCategory {
     private lateinit var binding: ActivityMealExtendedBinding
@@ -50,14 +52,13 @@ class MealExtendedActivity : AppCompatActivity() , ListenersCategory {
     }
 
     override fun onItemClicked(category: MealByCategory) {
-        viewModel.getMealById(category.idMeal)
-        viewModel.mealById.observe(this){
-            val meal : Meal = it
-            Log.d("meas","$it")
-            val intent = Intent(this, MealActivity::class.java)
+        runBlocking {
+            val meal = ApiInstance.api.getMealById(category.idMeal).body()?.meals?.get(0)
+            val intent = Intent(applicationContext, MealActivity::class.java)
             intent.putExtra("Meal",meal)
             startActivity(intent)
         }
+
     }
 
 

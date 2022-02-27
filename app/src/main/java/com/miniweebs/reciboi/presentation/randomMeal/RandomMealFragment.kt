@@ -16,10 +16,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.miniweebs.reciboi.R
+import com.miniweebs.reciboi.data.api.ApiInstance
 import com.miniweebs.reciboi.data.api.Meal
 import com.miniweebs.reciboi.data.api.User
 import com.miniweebs.reciboi.databinding.FragmentRandomMealBinding
 import com.miniweebs.reciboi.presentation.viewmodel.MealViewModel
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class RandomMealFragment : Fragment() {
@@ -42,8 +44,11 @@ class RandomMealFragment : Fragment() {
         databaseReference = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         saveImage = binding.mealSaveImage
-        viewModel.getRandomMeal()
-        viewModel.randomMeal.observe(viewLifecycleOwner){
+
+
+        runBlocking {
+            val it : Meal = ApiInstance.api.getSingleRandomMeal().body()?.meals?.get(0)!!
+
             binding.mealName.text = it.strMeal
             binding.mealArea.text = it.strArea
             binding.mealCategory.text = it.strCategory
@@ -88,7 +93,31 @@ class RandomMealFragment : Fragment() {
             videoView.settings.pluginState=WebSettings.PluginState.ON
             videoView.loadData("<html><body style=\" margin: 0px; padding: 0px;\"><iframe class=\"youtube-player\" type=\"text/html\" src=\"https://www.youtube.com/embed/$yt_id/?&theme=dark&autohide=2&modestbranding=1&showinfo=0\" frameborder=\"0\" style=\"width : 100%; height:100%; margin:0px; padding:0px; border:0;\" allowfullscreen></iframe></body></html>","text/html","utf-8");
             Glide.with(requireContext()).load(it.strMealThumb).into(binding.mealImage)
+
+            databaseReference.child("Users").child(auth.uid!!).addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(p0: DataSnapshot) {
+                    val user = p0.getValue(User::class.java)
+                    var mealList = user?.mealsList
+                    if(mealList==null) mealList= mutableListOf()
+                    for(i in mealList)
+                    {
+                        if(i.idMeal==meal.idMeal)
+                        {
+                            saveImage.setImageResource(R.drawable.meal_saved)
+                            saved = true
+                            break
+                        }
+                    }
+                    if(!saved) saveImage.setImageResource(R.drawable.meal_not_saved)
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         }
+
         textToSpeech = TextToSpeech(context,TextToSpeech.OnInitListener {
             if(it!=TextToSpeech.ERROR)
             {
@@ -140,7 +169,7 @@ class RandomMealFragment : Fragment() {
                     if(saved)
                     {
                         Log.d("check",mealList.toString())
-                        for(i in mealList)
+                        for(i in mealList!!)
                         {
                             Log.d("check","sadgers loop mei")
                             if(i.idMeal==meal.idMeal)
@@ -148,7 +177,7 @@ class RandomMealFragment : Fragment() {
                                 saveImage.setImageResource(R.drawable.meal_not_saved)
                                 saved = false
                                 Log.d("check","sadgers")
-                                mealList.remove(i)
+                                mealList!!.remove(i)
                                 Toast.makeText(context,"Meal removed",Toast.LENGTH_SHORT).show()
                                 break
                             }
@@ -156,7 +185,7 @@ class RandomMealFragment : Fragment() {
                     }
                     else
                     {
-                        mealList.add(meal)
+                        mealList!!.add(meal)
                         saveImage.setImageResource(R.drawable.meal_saved)
                         saved = true
                         Toast.makeText(context,"Meal saved",Toast.LENGTH_SHORT).show()
@@ -170,27 +199,6 @@ class RandomMealFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        databaseReference.child("Users").child(auth.uid!!).addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                val user = p0.getValue(User::class.java)
-                var mealList = user?.mealsList
-                if(mealList==null) mealList= mutableListOf()
-                for(i in mealList)
-                {
-                    if(i.idMeal==meal.idMeal)
-                    {
-                        saveImage.setImageResource(R.drawable.meal_saved)
-                        saved = true
-                        break
-                    }
-                }
-                if(!saved) saveImage.setImageResource(R.drawable.meal_not_saved)
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        saved=false
     }
 }
