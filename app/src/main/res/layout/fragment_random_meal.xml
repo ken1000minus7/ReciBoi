@@ -27,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/indieflowerregular"
-        android:layout_margin="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/heading_random_dishes"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,8 @@
         android:id="@+id/meal_area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         android:fontFamily="@font/indieflowerregular"
         app:layout_constraintTop_toBottomOf="@id/mealName"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +47,8 @@
         android:id="@+id/meal_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         android:fontFamily="@font/indieflowerregular"
         app:layout_constraintTop_toBottomOf="@id/mealName"
         app:layout_constraintStart_toEndOf="@id/meal_area"
@@ -57,7 +60,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/meal_area"
-        android:layout_margin="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         app:cardCornerRadius="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -68,6 +72,37 @@
         />
     </androidx.cardview.widget.CardView>
 
+
+    <TextView
+        android:id="@+id/heading_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_15sdp"
+        android:text="Ingredients"
+        android:fontFamily="@font/indieflowerregular"
+        app:layout_constraintTop_toBottomOf="@id/image_card"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/heading_ingredients"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp">
+        <TextView
+            android:id="@+id/tv_ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/indieflowerregular"
+            android:layout_margin="@dimen/_20sdp"
+            />
+    </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/heading_instructions"
         android:layout_width="wrap_content"
@@ -75,51 +110,47 @@
         android:textSize="@dimen/_15sdp"
         android:text="Instructions"
         android:fontFamily="@font/indieflowerregular"
-        app:layout_constraintTop_toBottomOf="@id/image_card"
-        android:layout_margin="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@id/card_ingredients"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_instructions"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/heading_instructions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:cardCornerRadius="@dimen/_20sdp"
-        android:layout_margin="@dimen/_20sdp">
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp">
         <TextView
             android:id="@+id/tv_instructions"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/indieflowerregular"
             android:layout_margin="@dimen/_20sdp"
             />
     </androidx.cardview.widget.CardView>
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/yt_link"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:backgroundTint="@color/white"-->
-<!--        android:fontFamily="@font/indieflowerregular"-->
-<!--        android:textSize="@dimen/_10sdp"-->
-<!--        android:drawableLeft="@drawable/ic_youtube"-->
-<!--        android:text="Youtube Link"-->
-<!--        android:layout_marginVertical="@dimen/_50sdp"-->
-<!--        android:textColor="@color/black"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/card_instructions" />-->
 
-    <WebView
-        android:id="@+id/yt_video"
-        android:layout_marginVertical="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/yt_video_card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_200sdp"
-        android:padding="0dp"
+        app:cardCornerRadius="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_instructions"/>
+        app:layout_constraintTop_toBottomOf="@id/card_instructions">
+        <WebView
+            android:id="@+id/yt_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
