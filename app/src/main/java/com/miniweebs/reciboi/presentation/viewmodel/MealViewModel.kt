@@ -16,6 +16,7 @@ class MealViewModel:ViewModel() {
     val areas : MutableLiveData<Areas> = MutableLiveData()
     val mealsByCategory : MutableLiveData<MealsByCategory> = MutableLiveData()
     val mealsByArea : MutableLiveData<MealsByCategory> = MutableLiveData()
+    val mealByName : MutableLiveData<MealList> = MutableLiveData()
     fun getRandomMeal(){
         viewModelScope.launch { 
             try {
@@ -62,6 +63,17 @@ class MealViewModel:ViewModel() {
             }catch (e:Exception){
                 Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
                 Log.d("some","$e")
+            }
+        }
+    }
+
+    fun getMealByName(name: String){
+        viewModelScope.launch {
+            try {
+                mealByName.value = ApiInstance.api.getMealByName(name).body()
+                Log.d("somesome","${mealByName.value}")
+            }catch (e:Exception){
+                Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
             }
         }
     }

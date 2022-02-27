@@ -20,4 +20,7 @@ interface TheMealDBapi {
     @GET("filter.php?a=")
     suspend fun getAreaWiseMeal(@Query("a") area: String) : Response<MealsByCategory>
 
+    @GET("search.php")
+    suspend fun getMealByName(@Query("s") name :String) : Response<MealList>
+
 }
