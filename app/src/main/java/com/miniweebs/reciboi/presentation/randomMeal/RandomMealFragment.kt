@@ -3,6 +3,7 @@ package com.miniweebs.reciboi.presentation.randomMeal
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.miniweebs.reciboi.databinding.FragmentRandomMealBinding
 import com.miniweebs.reciboi.presentation.viewmodel.MealViewModel
+import java.util.*
 
 class RandomMealFragment : Fragment() {
     private var _binding : FragmentRandomMealBinding? = null
+    private lateinit var textToSpeech: TextToSpeech
+    private var speaking : Boolean = false
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +72,46 @@ class RandomMealFragment : Fragment() {
             videoView.settings.pluginState=WebSettings.PluginState.ON
             videoView.loadData("<html><body style=\" margin: 0px; padding: 0px;\"><iframe class=\"youtube-player\" type=\"text/html\" src=\"https://www.youtube.com/embed/$yt_id/?&theme=dark&autohide=2&modestbranding=1&showinfo=0\" frameborder=\"0\" style=\"width : 100%; height:100%; margin:0px; padding:0px; border:0;\" allowfullscreen></iframe></body></html>","text/html","utf-8");
             Glide.with(requireContext()).load(it.strMealThumb).into(binding.mealImage)
+        }
+        textToSpeech = TextToSpeech(context,TextToSpeech.OnInitListener {
+            if(it!=TextToSpeech.ERROR)
+            {
+                textToSpeech.language= Locale.UK
+            }
+        })
+
+        binding.tvIngredients.setOnClickListener {
+            if(speaking)
+            {
+                textToSpeech.stop()
+                speaking=false
+            }
+            else
+            {
+                textToSpeech.speak(
+                    binding.tvIngredients.text.toString(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null
+                )
+                speaking=true
+            }
+        }
+
+        binding.tvInstructions.setOnClickListener {
+            if(speaking)
+            {
+                textToSpeech.stop()
+                speaking=false
+            }
+            else
+            {
+                textToSpeech.speak(
+                    binding.tvInstructions.text.toString(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null
+                )
+                speaking=true
+            }
         }
         return view
     }
