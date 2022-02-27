@@ -1,6 +1,7 @@
 package com.miniweebs.reciboi.presentation.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.miniweebs.reciboi.R
 import com.miniweebs.reciboi.data.api.Meal
+import com.miniweebs.reciboi.presentation.mealActivity.MealActivity
 
 class UserMealAdapter(var context: Context, var mealList: MutableList<Meal>) :
     RecyclerView.Adapter<UserMealAdapter.MealViewHolder>() {
@@ -26,6 +28,11 @@ class UserMealAdapter(var context: Context, var mealList: MutableList<Meal>) :
         holder.mealArea.text=meal.strArea
         holder.mealCategory.text=meal.strCategory
         Glide.with(context).load(meal.strMealThumb).into(holder.mealImage)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context,MealActivity::class.java)
+            intent.putExtra("Meal",meal)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

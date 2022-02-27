@@ -1,6 +1,8 @@
 package com.miniweebs.reciboi.data.api
 
-data class Meal(
+import java.io.Serializable
+
+data class Meal (
     val dateModified: Any? = null,
     val idMeal: String = "",
     val strArea: String = "",
@@ -54,4 +56,4 @@ data class Meal(
     val strSource: String = "",
     val strTags: String = "",
     val strYoutube: String = ""
-)
+) : Serializable
