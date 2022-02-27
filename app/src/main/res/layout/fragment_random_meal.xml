@@ -96,21 +96,30 @@
             android:layout_margin="@dimen/_20sdp"
             />
     </androidx.cardview.widget.CardView>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/yt_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/indieflowerregular"
-        android:textSize="@dimen/_10sdp"
-        android:drawableLeft="@drawable/ic_youtube"
-        android:text="Youtube Link"
-        android:layout_marginVertical="@dimen/_50sdp"
-        android:textColor="@color/black"
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/yt_link"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:fontFamily="@font/indieflowerregular"-->
+<!--        android:textSize="@dimen/_10sdp"-->
+<!--        android:drawableLeft="@drawable/ic_youtube"-->
+<!--        android:text="Youtube Link"-->
+<!--        android:layout_marginVertical="@dimen/_50sdp"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/card_instructions" />-->
+
+    <WebView
+        android:id="@+id/yt_video"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:padding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_instructions" />
-
-
+        app:layout_constraintTop_toBottomOf="@id/card_instructions"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
