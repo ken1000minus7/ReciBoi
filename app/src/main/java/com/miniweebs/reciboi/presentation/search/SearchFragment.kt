@@ -89,7 +89,6 @@ class SearchFragment : Fragment(), Listeners,ListenersCountry,
     }
 
     override fun onQueryTextSubmit(p0: String?): Boolean {
-        Toast.makeText(context, "$p0", Toast.LENGTH_SHORT).show()
         if (App.appContext?.isOnline == false) {
             Toast.makeText(requireContext(), "Connect to Internet and Try Again", Toast.LENGTH_LONG)
                 .show()
@@ -97,6 +96,8 @@ class SearchFragment : Fragment(), Listeners,ListenersCountry,
         }
 
         binding.rvAreasDishes.isVisible = false
+        binding.tvCategories.text = "Searches based on $p0"
+        binding.tvAreas.isVisible = false
         viewModel.getMealByName(p0!!)
         viewModel.mealByName.observe(viewLifecycleOwner) {
             val mealList: MutableList<Meal> = mutableListOf()
@@ -110,6 +111,8 @@ class SearchFragment : Fragment(), Listeners,ListenersCountry,
     override fun onQueryTextChange(p0: String?): Boolean {
         return if (p0!!.isEmpty()) {
             binding.rvAreasDishes.isVisible = true
+            binding.tvCategories.text = "Categories"
+            binding.tvAreas.isVisible = true
             viewModel.getCategories()
             viewModel.categories.observe(viewLifecycleOwner) {
                 val categories: MutableList<Category> = mutableListOf()

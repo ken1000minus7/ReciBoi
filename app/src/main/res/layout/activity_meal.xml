@@ -37,6 +37,7 @@
             app:layout_constraintTop_toTopOf="@+id/mealName" />
         <TextView
             android:id="@+id/meal_area"
+            android:textSize="@dimen/_18ssp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -47,6 +48,7 @@
             tools:text="meal area"/>
         <TextView
             android:id="@+id/meal_category"
+            android:textSize="@dimen/_18ssp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -79,8 +81,7 @@
             android:id="@+id/heading_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_15sdp"
-            android:text="Ingredients"
+            android:textSize="@dimen/_18ssp"            android:text="Ingredients"
             android:fontFamily="@font/indieflowerregular"
             app:layout_constraintTop_toBottomOf="@id/image_card"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -91,6 +92,7 @@
             android:id="@+id/card_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/lightorange"
             app:layout_constraintTop_toBottomOf="@id/heading_ingredients"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +111,7 @@
             android:id="@+id/heading_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_15sdp"
-            android:text="Instructions"
+            android:textSize="@dimen/_18ssp"            android:text="Instructions"
             android:fontFamily="@font/indieflowerregular"
             app:layout_constraintTop_toBottomOf="@id/card_ingredients"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -121,6 +122,7 @@
             android:id="@+id/card_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/lightred"
             app:layout_constraintTop_toBottomOf="@id/heading_instructions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
