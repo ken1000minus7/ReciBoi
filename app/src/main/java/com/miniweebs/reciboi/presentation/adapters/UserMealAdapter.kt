@@ -1,6 +1,7 @@
 package com.miniweebs.reciboi.presentation.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +21,11 @@ class UserMealAdapter(var context: Context, var mealList: MutableList<Meal>) :
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        val meal = mealList.get(position)
+        val meal = mealList[position]
         holder.mealName.text=meal.strMeal
         holder.mealArea.text=meal.strArea
         holder.mealCategory.text=meal.strCategory
-        Glide.with(context).load(meal.strImageSource).into(holder.mealImage)
+        Glide.with(context).load(meal.strMealThumb).into(holder.mealImage)
     }
 
     override fun getItemCount(): Int {
