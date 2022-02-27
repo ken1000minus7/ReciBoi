@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this,gso)
         firebaseAuth = FirebaseAuth.getInstance()
-        
+
         val signinButton = binding.googleSigninButton
         signinButton.setOnClickListener {
             signInGoogle()

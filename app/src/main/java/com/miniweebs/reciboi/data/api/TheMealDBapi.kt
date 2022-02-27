@@ -4,6 +4,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface TheMealDBapi {
-    @GET("/random.php")
-    suspend fun getSingleRandomMeal() : Response<List<Meal>>
+    @GET("random.php")
+    suspend fun getSingleRandomMeal() : Response<MealList>
 }

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/randomMealFragment"
-        android:name="com.miniweebs.reciboi.presentation.RandomMeal.RandomMealFragment"
+        android:name="com.miniweebs.reciboi.presentation.randomMeal.RandomMealFragment"
         android:label="Random Meal For You"
         tools:layout="@layout/fragment_random_meal" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.miniweebs.reciboi.presentation.Search.SearchFragment"
+        android:name="com.miniweebs.reciboi.presentation.search.SearchFragment"
         android:label="Search Meals"
         tools:layout="@layout/fragment_search" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/userPrefFragment"
-        android:name="com.miniweebs.reciboi.presentation.UserPref.UserPrefFragment"
+        android:name="com.miniweebs.reciboi.presentation.userPref.UserPrefFragment"
         android:label="User Preferences"
         tools:layout="@layout/fragment_user_pref" >
         <action
