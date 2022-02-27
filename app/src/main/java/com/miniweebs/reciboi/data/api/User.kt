@@ -1,10 +1,12 @@
 package com.miniweebs.reciboi.data.api
 
 class User {
-    lateinit var name : String
-    lateinit var email : String
-    lateinit var image : String
-    var mealsList : List<Meal> = mutableListOf()
+    var name : String = ""
+    var email : String = ""
+    var image : String = ""
+    var mealsList : MutableList<Meal> = mutableListOf()
+
+    constructor() {}
     constructor(name : String, email : String, image : String)
     {
         this.name=name
@@ -12,7 +14,7 @@ class User {
         this.image=image
     }
 
-    constructor(name : String, email : String, image : String, mealsList : List<Meal>)
+    constructor(name : String, email : String, image : String, mealsList : MutableList<Meal>)
     {
         this.name=name
         this.email=email

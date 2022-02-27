@@ -1,16 +1,23 @@
 package com.miniweebs.reciboi.presentation.randomMeal
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
+import com.miniweebs.reciboi.R
+import com.miniweebs.reciboi.data.api.Meal
+import com.miniweebs.reciboi.data.api.User
 import com.miniweebs.reciboi.databinding.FragmentRandomMealBinding
 import com.miniweebs.reciboi.presentation.viewmodel.MealViewModel
 import java.util.*
@@ -18,7 +25,12 @@ import java.util.*
 class RandomMealFragment : Fragment() {
     private var _binding : FragmentRandomMealBinding? = null
     private lateinit var textToSpeech: TextToSpeech
+    private lateinit var auth : FirebaseAuth
+    private lateinit var saveImage : ImageView
+    private lateinit var meal : Meal
+    private var saved = false
     private var speaking : Boolean = false
+    private lateinit var databaseReference: DatabaseReference
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +39,15 @@ class RandomMealFragment : Fragment() {
         _binding = FragmentRandomMealBinding.inflate(inflater,container,false)
         val view = binding.root
         val viewModel = ViewModelProvider(this)[MealViewModel::class.java]
+        databaseReference = FirebaseDatabase.getInstance().reference
+        auth = FirebaseAuth.getInstance()
+        saveImage = binding.mealSaveImage
         viewModel.getRandomMeal()
         viewModel.randomMeal.observe(viewLifecycleOwner){
             binding.mealName.text = it.strMeal
             binding.mealArea.text = it.strArea
             binding.mealCategory.text = it.strCategory
+            meal = it
 
             var ingredients = ""
             if(it.strIngredient1!="") ingredients+="•\t"+it.strIngredient1+"  " +(if(it.strMeasure1=="") "" else "("+it.strMeasure1+")")+"\n"
@@ -113,6 +129,68 @@ class RandomMealFragment : Fragment() {
                 speaking=true
             }
         }
+
+        binding.mealSaveImage.setOnClickListener {
+            databaseReference.child("Users").child(auth.uid!!).get().addOnCompleteListener {
+                if(it.isSuccessful)
+                {
+                    val user = it.result.getValue<User>()
+                    var mealList = user?.mealsList
+                    if(mealList==null) mealList= mutableListOf()
+                    if(saved)
+                    {
+                        Log.d("check",mealList.toString())
+                        for(i in mealList)
+                        {
+                            Log.d("check","sadgers loop mei")
+                            if(i.idMeal==meal.idMeal)
+                            {
+                                saveImage.setImageResource(R.drawable.meal_not_saved)
+                                saved = false
+                                Log.d("check","sadgers")
+                                mealList.remove(i)
+                                Toast.makeText(context,"Meal removed",Toast.LENGTH_SHORT).show()
+                                break
+                            }
+                        }
+                    }
+                    else
+                    {
+                        mealList.add(meal)
+                        saveImage.setImageResource(R.drawable.meal_saved)
+                        saved = true
+                        Toast.makeText(context,"Meal saved",Toast.LENGTH_SHORT).show()
+                    }
+                    databaseReference.child("Users").child(auth.uid!!).child("mealsList").setValue(mealList)
+                }
+            }
+        }
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        databaseReference.child("Users").child(auth.uid!!).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                val user = p0.getValue(User::class.java)
+                var mealList = user?.mealsList
+                if(mealList==null) mealList= mutableListOf()
+                for(i in mealList)
+                {
+                    if(i.idMeal==meal.idMeal)
+                    {
+                        saveImage.setImageResource(R.drawable.meal_saved)
+                        saved = true
+                        break
+                    }
+                }
+                if(!saved) saveImage.setImageResource(R.drawable.meal_not_saved)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }
