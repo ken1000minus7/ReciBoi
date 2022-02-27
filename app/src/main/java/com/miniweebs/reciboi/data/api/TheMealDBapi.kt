@@ -23,4 +23,6 @@ interface TheMealDBapi {
     @GET("search.php")
     suspend fun getMealByName(@Query("s") name :String) : Response<MealList>
 
+    @GET("lookup.php")
+    suspend fun getMealById(@Query("i") id:String) : Response<Meal>
 }

@@ -6,15 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.miniweebs.reciboi.R
 import com.miniweebs.reciboi.data.api.MealByCategory
 
-class CategoryAdapter(val context: Context, private val listOfMeals: MutableList<MealByCategory>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CategoryAdapter(val context: Context, private val listOfMeals: MutableList<MealByCategory> , val listenersCategory: ListenersCategory) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val mealText: TextView = itemView.findViewById(R.id.tv_name)
         val mealImage: ImageView = itemView.findViewById(R.id.img_category)
+        private val mealCard: CardView = itemView.findViewById(R.id.card_view_meal)
+        init {
+            mealCard.setOnClickListener {
+                listenersCategory.onItemClicked(listOfMeals[adapterPosition])
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +33,12 @@ class CategoryAdapter(val context: Context, private val listOfMeals: MutableList
         val entity = listOfMeals[position]
         holder.mealText.text = entity.strMeal
         Glide.with(context).load(entity.strMealThumb).into(holder.mealImage)
+
     }
 
     override fun getItemCount() = listOfMeals.size
+}
+
+interface ListenersCategory{
+    fun onItemClicked(category: MealByCategory)
 }

@@ -29,6 +29,7 @@ import com.miniweebs.reciboi.presentation.meals.MealExtendedActivity
 import com.miniweebs.reciboi.presentation.viewmodel.MealViewModel
 
 class SearchFragment : Fragment(), Listeners,ListenersCountry,
+    ListenersSearch,
     androidx.appcompat.widget.SearchView.OnQueryTextListener {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -100,7 +101,7 @@ class SearchFragment : Fragment(), Listeners,ListenersCountry,
         viewModel.mealByName.observe(viewLifecycleOwner) {
             val mealList: MutableList<Meal> = mutableListOf()
             mealList.addAll(it.meals)
-            binding.rvCategoriesDish.adapter = SearchAdapter(requireContext(), mealList)
+            binding.rvCategoriesDish.adapter = SearchAdapter(requireContext(), mealList,this)
         }
         binding.searchView.clearFocus()
         return true
@@ -114,9 +115,14 @@ class SearchFragment : Fragment(), Listeners,ListenersCountry,
                 val categories: MutableList<Category> = mutableListOf()
                 categories.addAll(it.categories)
                 binding.rvCategoriesDish.adapter = MealAdapter(requireContext(), categories, this)
-
             }
             true
         } else false
+    }
+
+    override fun onItemClicked(meal: Meal) {
+        val intent = Intent(context,MealActivity::class.java)
+        intent.putExtra("Meal",meal)
+        startActivity(intent)
     }
 }
