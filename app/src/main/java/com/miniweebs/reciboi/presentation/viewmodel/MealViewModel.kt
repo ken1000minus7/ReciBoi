@@ -5,13 +5,17 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.common.api.Api
 import com.miniweebs.reciboi.App
-import com.miniweebs.reciboi.data.api.ApiInstance
-import com.miniweebs.reciboi.data.api.Meal
+import com.miniweebs.reciboi.data.api.*
 import kotlinx.coroutines.launch
 
 class MealViewModel:ViewModel() {
     val randomMeal : MutableLiveData<Meal> = MutableLiveData()
+    val categories : MutableLiveData<Categories> = MutableLiveData()
+    val areas : MutableLiveData<Areas> = MutableLiveData()
+    val mealsByCategory : MutableLiveData<MealsByCategory> = MutableLiveData()
+    val mealsByArea : MutableLiveData<MealsByCategory> = MutableLiveData()
     fun getRandomMeal(){
         viewModelScope.launch { 
             try {
@@ -23,4 +27,43 @@ class MealViewModel:ViewModel() {
             }
         }
     }
+    fun getCategories(){
+        viewModelScope.launch {
+            try {
+                categories.value = ApiInstance.api.getMealsByCategories().body()
+            }catch (e:Exception){
+                Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun getCountries(){
+        viewModelScope.launch {
+            try {
+                areas.value = ApiInstance.api.getCountries().body()
+            }catch (e:Exception){
+                Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun getMealsByCategory(category:String){
+        viewModelScope.launch {
+            try {
+                mealsByCategory.value = ApiInstance.api.getCategorisedMeal(category).body()
+            }catch (e:Exception){
+                Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun getMealsByArea(category:String){
+        viewModelScope.launch {
+            try {
+                mealsByArea.value = ApiInstance.api.getAreaWiseMeal(category).body()
+            }catch (e:Exception){
+                Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
+                Log.d("some","$e")
+            }
+        }
+    }
+
 }
