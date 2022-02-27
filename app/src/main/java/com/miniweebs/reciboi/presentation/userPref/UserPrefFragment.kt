@@ -1,11 +1,18 @@
 package com.miniweebs.reciboi.presentation.userPref
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.miniweebs.reciboi.R
+import com.miniweebs.reciboi.data.api.User
+import com.miniweebs.reciboi.presentation.adapters.UserMealAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +28,10 @@ class UserPrefFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var mealAdapter : UserMealAdapter
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +46,30 @@ class UserPrefFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_pref, container, false)
+        val view = inflater.inflate(R.layout.fragment_user_pref, container, false)
+        recyclerView = view.findViewById<RecyclerView>(R.id.meal_list)
+        databaseReference = FirebaseDatabase.getInstance().reference
+        auth = FirebaseAuth.getInstance()
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        databaseReference.child("Users").child(auth.uid!!).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                val user = p0.getValue<User>()
+                var mealList=user?.mealsList
+                if(mealList==null) mealList = mutableListOf()
+                Log.d("checky",mealList.toString())
+                mealAdapter = UserMealAdapter(context!!,mealList)
+                recyclerView.adapter=mealAdapter
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     companion object {

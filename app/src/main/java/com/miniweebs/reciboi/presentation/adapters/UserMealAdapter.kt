@@ -11,14 +11,8 @@ import com.bumptech.glide.Glide
 import com.miniweebs.reciboi.R
 import com.miniweebs.reciboi.data.api.Meal
 
-class UserMealAdapater : RecyclerView.Adapter<UserMealAdapater.MealViewHolder> {
-    lateinit var context : Context
-    var mealList : MutableList<Meal> = mutableListOf()
-    constructor(context: Context, mealList: MutableList<Meal>)
-    {
-        this.context=context
-        this.mealList=mealList
-    }
+class UserMealAdapter(var context: Context, var mealList: MutableList<Meal>) :
+    RecyclerView.Adapter<UserMealAdapter.MealViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.meal_list_item,parent,false)
