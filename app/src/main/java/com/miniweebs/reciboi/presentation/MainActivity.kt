@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.miniweebs.reciboi.R
@@ -25,11 +26,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         val bottomNavigationView = binding!!.bottomNavbar
         val navController = findNavController(R.id.main_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.randomMealFragment,R.id.searchFragment,R.id.userPrefFragment))
-        setupActionBarWithNavController(navController,appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
+        if(auth.currentUser?.photoUrl!=null)
+        {
+            Glide.with(this).load(auth.currentUser?.photoUrl).into(binding!!.userImage)
+        }
     }
 
     override fun onStart() {

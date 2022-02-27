@@ -61,8 +61,11 @@ class UserPrefFragment : Fragment() {
                 var mealList=user?.mealsList
                 if(mealList==null) mealList = mutableListOf()
                 Log.d("checky",mealList.toString())
-                mealAdapter = UserMealAdapter(context!!,mealList)
-                recyclerView.adapter=mealAdapter
+                if(context!=null)
+                {
+                    mealAdapter = UserMealAdapter(context!!,mealList)
+                    recyclerView.adapter=mealAdapter
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {
