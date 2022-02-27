@@ -82,7 +82,7 @@ class MealViewModel:ViewModel() {
     fun getMealById(id : String){
         viewModelScope.launch {
             try {
-                mealById.value = ApiInstance.api.getMealById(id).body()
+                mealById.value = ApiInstance.api.getMealById(id).body()?.meals?.get(0)
             }catch (e:Exception){
                 Toast.makeText(App.appContext, "Check Internet Access", Toast.LENGTH_SHORT).show()
             }

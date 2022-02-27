@@ -53,9 +53,12 @@ class MealExtendedActivity : AppCompatActivity() , ListenersCategory {
         viewModel.getMealById(category.idMeal)
         viewModel.mealById.observe(this){
             val meal : Meal = it
+            Log.d("meas","$it")
             val intent = Intent(this, MealActivity::class.java)
             intent.putExtra("Meal",meal)
             startActivity(intent)
         }
     }
+
+
 }
